@@ -71,5 +71,5 @@ public Timestamp getCalculatedAt() {
 public void setCalculatedAt(Timestamp calculatedAt) {
     this.calculatedAt = calculatedAt;
 }
-
+public EligibilityResult(Long id,S)
 }
