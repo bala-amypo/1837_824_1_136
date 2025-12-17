@@ -44,6 +44,18 @@ public Timestamp getTimestamp() {
 public void setTimestamp(Timestamp timestamp) {
     this.timestamp = timestamp;
 }
+public RiskAssessmentLog(Long id,Long loanRequestId,Double dtiRatio,String creditCheckStatus,Timestamp timestamp){
+    this.id=id;
+    this.loanRequestId=loanRequestId;
+    this.dtiRatio=dtiRatio;
+    this.creditCheckStatus=creditCheckStatus;
+    this.timestamp=timestamp;
+
+
+}
+public RiskAssessmentLog(){
+    
+}
 
 
 }

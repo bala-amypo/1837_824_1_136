@@ -63,8 +63,18 @@ public void setAppliedAt(Timestamp appliedAt) {
     this.appliedAt = appliedAt;
 }
 public LoanRequest(Long id,String user,Double reqestedAmount,Integer tenureMonths,String purpose,String status,Timestamp appliedAt,){
-    this.
+    this.id=id;
+    this.user=user;
+    this.reqestedAmount=reqestedAmount;
+    this.tenureMonths=tenureMonths;
+    this.purpose=purpose;
+    this.status=status;
+    this.appliedAt=appliedAt;
 
+
+}
+public LoanRequest(){
+    
 }
 
 }

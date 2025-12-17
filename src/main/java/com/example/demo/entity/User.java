@@ -53,6 +53,11 @@ public Timestamp getCreatedAt() {
 public void setCreatedAt(Timestamp createdAt) {
     this.createdAt = createdAt;
 }
+public user(Long id,String fullName,String email,String password,
+     String role,
+    Timestamp createdAt,){
+
+}
 
    
 }
