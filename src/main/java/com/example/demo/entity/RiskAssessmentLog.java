@@ -4,6 +4,6 @@ public class RiskAssessmentLog{
     private Long loanRequestId;
     private Double dtiRatio;
     private String creditCheckStatus;
-    private Time
+    private Timestamp timestamp;
 
 }

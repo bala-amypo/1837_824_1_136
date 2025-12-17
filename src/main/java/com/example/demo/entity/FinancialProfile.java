@@ -9,4 +9,4 @@ public class FinancialProfile{
     private Double savingsBalance;
     private Timestamp lastUpdatedAt;
 }
-}
+
