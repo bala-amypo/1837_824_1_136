@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import java.sql.Timestamp;
 @Entity
 public class LoanRequest{
     @Id
@@ -12,6 +15,7 @@ public class LoanRequest{
     private String purpose;
     private String status;
     private Timestamp appliedAt;
+    
     public Long getId() {
     return id;
 }

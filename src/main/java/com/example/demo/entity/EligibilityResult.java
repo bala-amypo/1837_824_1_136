@@ -2,7 +2,9 @@ package com.example.demo.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
-i
+import jakarta.persistence.GenerationType;
+import java.sql.Timestamp;
+
 @Entity
 public class EligibilityResult{
     @Id

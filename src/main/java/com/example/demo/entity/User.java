@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import java.sql.Timestamp;
 @Entity
 public class User{
     @Id
