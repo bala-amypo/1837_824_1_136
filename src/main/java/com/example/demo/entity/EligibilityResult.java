@@ -71,5 +71,16 @@ public Timestamp getCalculatedAt() {
 public void setCalculatedAt(Timestamp calculatedAt) {
     this.calculatedAt = calculatedAt;
 }
-public EligibilityResult(Long id,S)
+public EligibilityResult(Long id,String loanRequest,Boolean isEligible,Double maxEligibleAmount,Double EstimatedEmi,String riskLevel,String rejectionReason,Timestamp calculatedAt){
+    this.id=id;
+    this.loanRequest=loanRequest;
+    this.isEligible=isEligible;
+    this.maxEligibleAmount=maxEligibleAmount;
+    this.EstimatedEmi=EstimatedEmi;
+    this.riskLevel=riskLevel;
+    this.rejectionReason=rejectionReason;
+    this.calculatedAt=calculatedAt;
+
+}
+public 
 }
