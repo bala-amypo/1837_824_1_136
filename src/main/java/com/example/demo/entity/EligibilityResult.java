@@ -82,5 +82,7 @@ public EligibilityResult(Long id,String loanRequest,Boolean isEligible,Double ma
     this.calculatedAt=calculatedAt;
 
 }
-public 
+public EligibilityResult(){
+    
+}
 }

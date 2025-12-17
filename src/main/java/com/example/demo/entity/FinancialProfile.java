@@ -71,6 +71,13 @@ public Timestamp getLastUpdatedAt() {
 public void setLastUpdatedAt(Timestamp lastUpdatedAt) {
     this.lastUpdatedAt = lastUpdatedAt;
 }
-
+public FinancialProfile(Long id,String user,Double monthlyIncome,Double monthlyExpenses,Double existingLoanEmi,Integer creditScore,Double savingsBalance,Timestamp lastUpdatedAt){
+    this.id=id;
+    this.user=user;
+    this.monthlyIncome=monthlyIncome;
+    this.monthlyExpenses=monthlyExpenses;
+    this.existingLoanEmi=existingLoanEmi;
+    this.creditScore=creditScore;
+}
 }
 
