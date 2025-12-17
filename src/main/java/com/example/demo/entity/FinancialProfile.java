@@ -78,6 +78,11 @@ public FinancialProfile(Long id,String user,Double monthlyIncome,Double monthlyE
     this.monthlyExpenses=monthlyExpenses;
     this.existingLoanEmi=existingLoanEmi;
     this.creditScore=creditScore;
+    this.savingsBalance=savingsBalance;
+    this.lastUpdatedAt=lastUpdatedAt;
+}
+public FinancialProfile(){
+    
 }
 }
 
