@@ -1,4 +1,6 @@
 package com.example.demo.entity;
+import jakarta.persistence.Entity;
+im
 public class RiskAssessmentLog{
     private Long id;
     private Long loanRequestId;
@@ -54,7 +56,7 @@ public RiskAssessmentLog(Long id,Long loanRequestId,Double dtiRatio,String credi
 
 }
 public RiskAssessmentLog(){
-    
+
 }
 
 
