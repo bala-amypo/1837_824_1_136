@@ -1,5 +1,9 @@
 package com.example.demo.entity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
 public class LoanRequest{
+    @Id
     private Long id;
     private String user;
     private Double reqestedAmount;
@@ -74,7 +78,7 @@ public LoanRequest(Long id,String user,Double reqestedAmount,Integer tenureMonth
 
 }
 public LoanRequest(){
-    
+
 }
 
 }

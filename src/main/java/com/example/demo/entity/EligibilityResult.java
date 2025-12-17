@@ -1,5 +1,9 @@
 package com.example.demo.entity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
 public class EligibilityResult{
+    @Id
     private Long id;
     private String loanRequest;
     private Boolean isEligible;
@@ -83,6 +87,6 @@ public EligibilityResult(Long id,String loanRequest,Boolean isEligible,Double ma
 
 }
 public EligibilityResult(){
-    
+
 }
 }

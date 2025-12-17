@@ -1,5 +1,9 @@
 package com.example.demo.entity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
 public class FinancialProfile{
+    @Id
     private Long id;
     private String user;
     private Double monthlyIncome;
@@ -82,7 +86,7 @@ public FinancialProfile(Long id,String user,Double monthlyIncome,Double monthlyE
     this.lastUpdatedAt=lastUpdatedAt;
 }
 public FinancialProfile(){
-    
+
 }
 }
 

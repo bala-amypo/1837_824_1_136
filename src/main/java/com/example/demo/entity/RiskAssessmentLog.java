@@ -1,7 +1,9 @@
 package com.example.demo.entity;
 import jakarta.persistence.Entity;
-im
+import jakarta.persistence.Id;
+@Entity
 public class RiskAssessmentLog{
+    @Id
     private Long id;
     private Long loanRequestId;
     private Double dtiRatio;
