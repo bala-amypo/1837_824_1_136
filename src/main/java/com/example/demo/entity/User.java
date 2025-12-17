@@ -4,6 +4,7 @@ import jakarta.persistence.Id;
 @Entity
 public class User{
     @Id
+    @GeneratedValue(strategy=GenerationType.IDEN)
     private Long id;
     private String fullName;
     private String email;
