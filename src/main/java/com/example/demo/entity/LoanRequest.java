@@ -10,7 +10,7 @@ public class LoanRequest{
      @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String user;
-    private Double reqestedAmount;
+    private Double requestedAmount;
     private Integer tenureMonths;
     private String purpose;
     private String status;
@@ -33,11 +33,11 @@ public void setUser(String user) {
 }
 
 public Double getReqestedAmount() {
-    return reqestedAmount;
+    return requestedAmount;
 }
 
-public void setReqestedAmount(Double reqestedAmount) {
-    this.reqestedAmount = reqestedAmount;
+public void setReqestedAmount(Double requestedAmount) {
+    this.requestedAmount = requestedAmount;
 }
 
 public Integer getTenureMonths() {
@@ -71,10 +71,10 @@ public Timestamp getAppliedAt() {
 public void setAppliedAt(Timestamp appliedAt) {
     this.appliedAt = appliedAt;
 }
-public LoanRequest(Long id,String user,Double reqestedAmount,Integer tenureMonths,String purpose,String status,Timestamp appliedAt){
+public LoanRequest(Long id,String user,Double requestedAmount,Integer tenureMonths,String purpose,String status,Timestamp appliedAt){
     this.id=id;
     this.user=user;
-    this.reqestedAmount=requestedAmount;
+    this.requestedAmount=requestedAmount;
     this.tenureMonths=tenureMonths;
     this.purpose=purpose;
     this.status=status;
