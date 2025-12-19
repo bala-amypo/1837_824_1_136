@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LoanRequestServiceImpl implements LoanRequestService {
+public class LoanRequestServiceimpl implements LoanRequestService {
 
     private final LoanRequestRepository loanRequestRepository;
     private final UserRepository userRepository;
