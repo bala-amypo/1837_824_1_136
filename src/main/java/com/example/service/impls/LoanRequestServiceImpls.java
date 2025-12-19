@@ -25,6 +25,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
 
     @Override
     public LoanRequest submitRequest(LoanRequest request) {
+
         if (request.getRequestedAmount() <= 0) {
             throw new BadRequestException("Requested amount");
         }
@@ -33,7 +34,6 @@ public class LoanRequestServiceImpl implements LoanRequestService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         request.setUser(user);
-        request.setStatus("PENDING");
         return loanRequestRepository.save(request);
     }
 

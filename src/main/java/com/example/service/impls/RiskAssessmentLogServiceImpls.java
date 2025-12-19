@@ -11,6 +11,8 @@ import com.example.demo.repository.RiskAssessmentLogRepository;
 import com.example.demo.service.RiskAssessmentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RiskAssessmentServiceImpl implements RiskAssessmentService {
 
@@ -29,32 +31,24 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService {
     @Override
     public RiskAssessmentLog assessRisk(Long loanRequestId) {
 
-        if (!logRepository.findByLoanRequestId(loanRequestId).isEmpty()) {
-            throw new BadRequestException("Risk already assessed");
-        }
-
-        LoanRequest request = loanRequestRepository.findById(loanRequestId)
+        LoanRequest loan = loanRequestRepository.findById(loanRequestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Loan request not found"));
 
-        FinancialProfile profile = profileRepository.findByUserId(request.getUser().getId())
+        FinancialProfile profile = profileRepository.findByUserId(loan.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
 
-        double obligations = profile.getMonthlyExpenses() +
-                (profile.getExistingLoanEmi() == null ? 0 : profile.getExistingLoanEmi());
-        double dti = obligations / profile.getMonthlyIncome();
-
         RiskAssessmentLog log = new RiskAssessmentLog();
-        log.setLoanRequestId(request.getId());
+        log.setLoanRequestId(loanRequestId);
+
+        double dti = profile.getMonthlyExpenses() / profile.getMonthlyIncome();
         log.setDtiRatio(dti);
-        log.setCreditCheckStatus(profile.getCreditScore() >= 650 ? "APPROVED" : "REJECTED");
+        log.setCreditCheckStatus("APPROVED");
 
         return logRepository.save(log);
     }
 
     @Override
-    public RiskAssessmentLog getByLoanRequestId(Long loanRequestId) {
-        return logRepository.findByLoanRequestId(loanRequestId).stream()
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Risk assessment not found"));
+    public List<RiskAssessmentLog> getByLoanRequestId(Long loanRequestId) {
+        return logRepository.findByLoanRequestId(loanRequestId);
     }
 }
