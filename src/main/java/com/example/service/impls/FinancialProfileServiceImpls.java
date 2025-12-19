@@ -10,12 +10,12 @@ import com.example.demo.service.FinancialProfileService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FinancialProfileServiceimpl implements FinancialProfileService {
+public class FinancialProfileServiceImpl implements FinancialProfileService {
 
     private final FinancialProfileRepository profileRepository;
     private final UserRepository userRepository;
 
-    public FinancialProfileServiceimpl(FinancialProfileRepository profileRepository,
+    public FinancialProfileServiceImpl(FinancialProfileRepository profileRepository,
                                        UserRepository userRepository) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
@@ -23,13 +23,17 @@ public class FinancialProfileServiceimpl implements FinancialProfileService {
 
     @Override
     public FinancialProfile createOrUpdate(FinancialProfile profile) {
-
-        Long userId = profile.getUser().getId();
-        User user = userRepository.findById(userId)
+        User user = userRepository.findById(profile.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
+        profileRepository.findByUserId(user.getId()).ifPresent(existing -> {
+            if (profile.getId() == null) {
+                throw new BadRequestException("Financial profile already exists");
+            }
+        });
+
         if (profile.getMonthlyIncome() <= 0) {
-            throw new BadRequestException("Monthly income must be > 0");
+            throw new BadRequestException("monthlyIncome");
         }
 
         if (profile.getCreditScore() < 300 || profile.getCreditScore() > 900) {
@@ -37,17 +41,7 @@ public class FinancialProfileServiceimpl implements FinancialProfileService {
         }
 
         profile.setUser(user);
-
-        return profileRepository.findByUserId(userId)
-                .map(existing -> {
-                    existing.setMonthlyIncome(profile.getMonthlyIncome());
-                    existing.setMonthlyExpenses(profile.getMonthlyExpenses());
-                    existing.setExistingLoanEmi(profile.getExistingLoanEmi());
-                    existing.setCreditScore(profile.getCreditScore());
-                    existing.setSavingsBalance(profile.getSavingsBalance());
-                    return profileRepository.save(existing);
-                })
-                .orElseGet(() -> profileRepository.save(profile));
+        return profileRepository.save(profile);
     }
 
     @Override

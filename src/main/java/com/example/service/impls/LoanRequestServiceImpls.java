@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LoanRequestServiceimpl implements LoanRequestService {
+public class LoanRequestServiceImpl implements LoanRequestService {
 
     private final LoanRequestRepository loanRequestRepository;
     private final UserRepository userRepository;
 
-    public LoanRequestServiceimpl(LoanRequestRepository loanRequestRepository,
+    public LoanRequestServiceImpl(LoanRequestRepository loanRequestRepository,
                                   UserRepository userRepository) {
         this.loanRequestRepository = loanRequestRepository;
         this.userRepository = userRepository;
@@ -25,7 +25,6 @@ public class LoanRequestServiceimpl implements LoanRequestService {
 
     @Override
     public LoanRequest submitRequest(LoanRequest request) {
-
         if (request.getRequestedAmount() <= 0) {
             throw new BadRequestException("Requested amount");
         }
@@ -35,7 +34,6 @@ public class LoanRequestServiceimpl implements LoanRequestService {
 
         request.setUser(user);
         request.setStatus("PENDING");
-
         return loanRequestRepository.save(request);
     }
 
