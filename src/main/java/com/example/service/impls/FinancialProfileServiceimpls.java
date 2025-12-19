@@ -10,12 +10,12 @@ import com.example.demo.service.FinancialProfileService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FinancialProfileServiceImpl implements FinancialProfileService {
+public class FinancialProfileServiceimpl implements FinancialProfileService {
 
     private final FinancialProfileRepository profileRepository;
     private final UserRepository userRepository;
 
-    public FinancialProfileServiceImpl(FinancialProfileRepository profileRepository,
+    public FinancialProfileServiceimpl(FinancialProfileRepository profileRepository,
                                        UserRepository userRepository) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;

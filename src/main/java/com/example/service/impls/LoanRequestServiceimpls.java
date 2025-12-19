@@ -17,7 +17,7 @@ public class LoanRequestServiceimpl implements LoanRequestService {
     private final LoanRequestRepository loanRequestRepository;
     private final UserRepository userRepository;
 
-    public LoanRequestServiceImpl(LoanRequestRepository loanRequestRepository,
+    public LoanRequestServiceimpl(LoanRequestRepository loanRequestRepository,
                                   UserRepository userRepository) {
         this.loanRequestRepository = loanRequestRepository;
         this.userRepository = userRepository;

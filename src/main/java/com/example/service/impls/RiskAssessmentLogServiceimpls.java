@@ -8,13 +8,13 @@ import com.example.demo.service.RiskAssessmentService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RiskAssessmentServiceImpl implements RiskAssessmentService {
+public class RiskAssessmentServiceimpl implements RiskAssessmentService {
 
     private final LoanRequestRepository loanRequestRepository;
     private final FinancialProfileRepository profileRepository;
     private final RiskAssessmentLogRepository riskLogRepository;
 
-    public RiskAssessmentServiceImpl(LoanRequestRepository loanRequestRepository,
+    public RiskAssessmentServiceimpl(LoanRequestRepository loanRequestRepository,
                                      FinancialProfileRepository profileRepository,
                                      RiskAssessmentLogRepository riskLogRepository) {
         this.loanRequestRepository = loanRequestRepository;
