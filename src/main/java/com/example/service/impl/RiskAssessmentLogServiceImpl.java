@@ -12,7 +12,6 @@ public class RiskAssessmentLogServiceImpl implements RiskAssessmentLogService {
 
     private final RiskAssessmentLogRepository repository;
 
-    // ✅ CONSTRUCTOR NAME MUST MATCH CLASS NAME
     public RiskAssessmentLogServiceImpl(RiskAssessmentLogRepository repository) {
         this.repository = repository;
     }
@@ -23,7 +22,7 @@ public class RiskAssessmentLogServiceImpl implements RiskAssessmentLogService {
     }
 
     @Override
-    public List<RiskAssessmentLog> getAll() {
-        return repository.findAll();
+    public List<RiskAssessmentLog> getByLoanRequestId(Long loanRequestId) {
+        return repository.findByLoanRequestId(loanRequestId);
     }
 }
