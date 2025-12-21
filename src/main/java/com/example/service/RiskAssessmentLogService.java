@@ -4,7 +4,7 @@ import com.example.demo.entity.RiskAssessmentLog;
 
 import java.util.List;
 
-public interface RiskAssessmentService {
+public interface RiskAssessmentLogService {
 
     RiskAssessmentLog assessRisk(Long loanRequestId);
 
