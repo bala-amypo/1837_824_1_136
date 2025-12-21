@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RiskAssessmentServiceImpl implements RiskAssessmentService {
+public class RiskAssessmentLogServiceImpl implements RiskAssessmentService {
 
     private final LoanRequestRepository loanRequestRepository;
     private final FinancialProfileRepository profileRepository;
