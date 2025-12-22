@@ -1,40 +1,27 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.FinancialProfile;
-import com.example.demo.entity.User;
-import com.example.demo.exception.BadRequestException;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.FinancialProfileRepository;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.FinancialProfileService;
 import org.springframework.stereotype.Service;
+import com.example.demo.service.FinancialProfileService;
+import com.example.demo.entity.FinancialProfile;
+import com.example.demo.repository.FinancialProfileRepository;
 
 @Service
 public class FinancialProfileServiceImpl implements FinancialProfileService {
 
-    private final FinancialProfileRepository profileRepository;
-    private final UserRepository userRepository;
+    private final FinancialProfileRepository repo;
 
-    public FinancialProfileServiceImpl(FinancialProfileRepository profileRepository,
-                                       UserRepository userRepository) {
-        this.profileRepository = profileRepository;
-        this.userRepository = userRepository;
+    public FinancialProfileServiceImpl(FinancialProfileRepository repo) {
+        this.repo = repo;
     }
 
-    @Override
-    public FinancialProfile createOrUpdate(FinancialProfile profile) {
-
-        User user = userRepository.findById(profile.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        profile.setUser(user);
-
-        return profileRepository.save(profile);
+    public FinancialProfile createOrUpdateProfile(FinancialProfile profile) {
+        return repo.save(profile);
     }
 
-    @Override
-    public FinancialProfile getByUserId(Long userId) {
-        return profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
+    public FinancialProfile getProfileByUser(Long userId) {
+        return repo.findAll().stream()
+                .filter(p -> p.getUser().getId().equals(userId))
+                .findFirst()
+                .orElse(null);
     }
 }
