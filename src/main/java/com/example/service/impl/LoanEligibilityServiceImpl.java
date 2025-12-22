@@ -1,9 +1,11 @@
 package com.example.demo.service.impl;
-
+import com.example.demo.repository.LoanRequestRepository;
+import com.example.demo.repository.EligibilityResultRepository;
+//import com.example.demo.repository.*;
 import org.springframework.stereotype.Service;
 import com.example.demo.service.LoanEligibilityService;
 import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+
 
 @Service
 public class LoanEligibilityServiceImpl implements LoanEligibilityService {
