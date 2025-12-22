@@ -1,89 +1,37 @@
 package com.example.demo.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import java.sql.Timestamp;
+
+import jakarta.persistence.*;
+
 @Entity
-public class LoanRequest{
+public class LoanRequest {
+
     @Id
-     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user;
+
     private Double requestedAmount;
-    private Integer tenureMonths;
-    private String purpose;
-    private String status;
-    private Timestamp appliedAt;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Long getId() {
-    return id;
-}
+        return id;
+    }
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public Double getRequestedAmount() {
+        return requestedAmount;
+    }
 
-public String getUser() {
-    return user;
-}
+    public void setRequestedAmount(Double requestedAmount) {
+        this.requestedAmount = requestedAmount;
+    }
 
-public void setUser(String user) {
-    this.user = user;
-}
+    public User getUser() {
+        return user;
+    }
 
-public Double getReqestedAmount() {
-    return requestedAmount;
-}
-
-public void setReqestedAmount(Double requestedAmount) {
-    this.requestedAmount = requestedAmount;
-}
-
-public Integer getTenureMonths() {
-    return tenureMonths;
-}
-
-public void setTenureMonths(Integer tenureMonths) {
-    this.tenureMonths = tenureMonths;
-}
-
-public String getPurpose() {
-    return purpose;
-}
-
-public void setPurpose(String purpose) {
-    this.purpose = purpose;
-}
-
-public String getStatus() {
-    return status;
-}
-
-public void setStatus(String status) {
-    this.status = status;
-}
-
-public Timestamp getAppliedAt() {
-    return appliedAt;
-}
-
-public void setAppliedAt(Timestamp appliedAt) {
-    this.appliedAt = appliedAt;
-}
-public LoanRequest(Long id,String user,Double requestedAmount,Integer tenureMonths,String purpose,String status,Timestamp appliedAt){
-    this.id=id;
-    this.user=user;
-    this.requestedAmount=requestedAmount;
-    this.tenureMonths=tenureMonths;
-    this.purpose=purpose;
-    this.status=status;
-    this.appliedAt=appliedAt;
-
-
-}
-public LoanRequest(){
-
-}
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
