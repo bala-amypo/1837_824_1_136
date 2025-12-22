@@ -1,28 +1,28 @@
-package com.example.demo.controller;
+// package com.example.demo.controller;
 
-import com.example.demo.entity.FinancialProfile;
-import com.example.demo.service.FinancialProfileService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.*;
+// import com.example.demo.entity.FinancialProfile;
+// import com.example.demo.service.FinancialProfileService;
+// import io.swagger.v3.oas.annotations.tags.Tag;
+// import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/financial-profiles")
-@Tag(name = "Financial Profiles")
-public class FinancialProfileController {
+// @RestController
+// @RequestMapping("/api/financial-profiles")
+// @Tag(name = "Financial Profiles")
+// public class FinancialProfileController {
 
-    private final FinancialProfileService service;
+//     private final FinancialProfileService service;
 
-    public FinancialProfileController(FinancialProfileService service) {
-        this.service = service;
-    }
+//     public FinancialProfileController(FinancialProfileService service) {
+//         this.service = service;
+//     }
 
-    @PostMapping
-    public FinancialProfile createOrUpdate(@RequestBody FinancialProfile profile) {
-        return service.createOrUpdateProfile(profile);
-    }
+//     @PostMapping
+//     public FinancialProfile createOrUpdate(@RequestBody FinancialProfile profile) {
+//         return service.createOrUpdateProfile(profile);
+//     }
 
-    @GetMapping("/user/{userId}")
-    public FinancialProfile getByUser(@PathVariable Long userId) {
-        return service.getProfileByUser(userId);
-    }
-}
+//     @GetMapping("/user/{userId}")
+//     public FinancialProfile getByUser(@PathVariable Long userId) {
+//         return service.getProfileByUser(userId);
+//     }
+// }
