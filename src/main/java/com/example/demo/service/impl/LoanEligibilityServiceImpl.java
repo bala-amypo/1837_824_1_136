@@ -19,16 +19,17 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
         this.repo = repo;
         this.loanRepo = loanRepo;
     }
+@Override
+public EligibilityResult getResultByRequest(Long requestId) {
+    LoanRequest loan = loanRepo.findById(requestId).orElseThrow();
 
-    @Override
-    public EligibilityResult getResultByRequest(Long requestId) {
-        LoanRequest loan = loanRepo.findById(requestId).orElseThrow();
+    EligibilityResult result = new EligibilityResult();
+    result.setLoanRequest(loan);
+    result.setEligible(true);
+    result.setMaxEligibleAmount(loan.getRequestedAmount() * 0.8);
 
-        EligibilityResult result = new EligibilityResult();
-        result.setLoanRequest(loan);
-        result.setEligible(true);
-        result.setMaxEligibleAmount(loan.getRequestedAmount() * 0.8);
+    return repo.save(result);
+}
 
-        return repo.save(result);
-    }
+  
 }
