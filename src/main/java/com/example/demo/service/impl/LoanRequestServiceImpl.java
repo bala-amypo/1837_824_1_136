@@ -17,6 +17,16 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     }
 
     @Override
+    public LoanRequest submitLoanRequest(LoanRequest request) {
+        return repo.save(request);
+    }
+
+    @Override
+    public LoanRequest getRequestById(Long id) {
+        return repo.findById(id).orElseThrow();
+    }
+
+    @Override
     public List<LoanRequest> getRequestsByUser(Long userId) {
         return repo.findByUserId(userId);
     }

@@ -21,7 +21,7 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
     }
 
     @Override
-    public EligibilityResult evaluateEligibility(Long requestId) {
+    public EligibilityResult getResultByRequest(Long requestId) {
         LoanRequest loan = loanRepo.findById(requestId).orElseThrow();
 
         EligibilityResult result = new EligibilityResult();
