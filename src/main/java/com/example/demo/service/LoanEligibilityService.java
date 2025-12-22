@@ -3,5 +3,6 @@ package com.example.demo.service;
 import com.example.demo.entity.EligibilityResult;
 
 public interface LoanEligibilityService {
-    EligibilityResult getResultByRequest(Long requestId);
+
+    EligibilityResult evaluateEligibility(Long requestId);
 }
