@@ -12,15 +12,15 @@
 
 //     public EligibilityController(LoanEligibilityService service) {
 //         this.service = service;
-//     }
+     }
 
-//     @PostMapping("/evaluate/{id}")
-//     public EligibilityResult evaluate(@PathVariable Long id) {
-//         return service.evaluateEligibility(id);
-//     }
+     @PostMapping("/evaluate/{id}")
+     public EligibilityResult evaluate(@PathVariable Long id) {
+         return service.evaluateEligibility(id);
+     }
 
-//     @GetMapping("/result/{id}")
-//     public EligibilityResult get(@PathVariable Long id) {
-//         return service.getResultByRequest(id);
-//     }
-// }
+     @GetMapping("/result/{id}")
+     public EligibilityResult get(@PathVariable Long id) {
+         return service.getResultByRequest(id);
+     }
+ }

@@ -1,17 +1,17 @@
-// package com.example.demo.controller;
+ package com.example.demo.controller;
 
-// import com.example.demo.entity.LoanRequest;
-// import com.example.demo.service.LoanRequestService;
-// import org.springframework.web.bind.annotation.*;
-// import java.util.List;
+ import com.example.demo.entity.LoanRequest;
+ import com.example.demo.service.LoanRequestService;
+ import org.springframework.web.bind.annotation.*;
+ import java.util.List;
 
-// @RestController
-// @RequestMapping("/api/loan-requests")
-// public class LoanRequestController {
+ @RestController
+ @RequestMapping("/api/loan-requests")
+ public class LoanRequestController {
 
-//     private final LoanRequestService service;
+     private final LoanRequestService service;
 
-//     public LoanRequestController(LoanRequestService service) {
+     public LoanRequestController(LoanRequestService service) {
          this.service = service;
      }
 
