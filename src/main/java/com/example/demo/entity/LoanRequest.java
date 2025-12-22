@@ -1,37 +1,60 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "loan_requests")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LoanRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @NotNull(message = "Requested amount is required")
+    @Min(value = 1, message = "Requested amount must be greater than 0")
+    @Column(nullable = false)
     private Double requestedAmount;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @NotNull(message = "Tenure is required")
+    @Min(value = 1, message = "Tenure months must be greater than 0")
+    @Column(nullable = false)
+    private Integer tenureMonths;
 
-    public Long getId() {
-        return id;
-    }
+    private String purpose;
 
-    public Double getRequestedAmount() {
-        return requestedAmount;
-    }
+    @NotBlank(message = "Loan status is required")
+    @Pattern(
+        regexp = "PENDING|APPROVED|REJECTED",
+        message = "Status must be PENDING, APPROVED, or REJECTED"
+    )
+    @Column(nullable = false)
+    private String status;
 
-    public void setRequestedAmount(Double requestedAmount) {
-        this.requestedAmount = requestedAmount;
-    }
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime appliedAt;
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
+    @PrePersist
+    protected void onCreate() {
+        this.appliedAt = LocalDateTime.now();
+
+        if (this.status == null || this.status.isBlank()) {
+            this.status = "PENDING";
+        }
     }
 }
+
+
+
+
+

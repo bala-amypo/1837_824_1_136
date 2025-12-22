@@ -1,29 +1,55 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "eligibility_results")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EligibilityResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean eligible;
+
+    @NotNull(message = "Eligibility flag is required")
+    @Column(nullable = false)
+    private Boolean isEligible;
+
+    @NotNull(message = "Max eligible amount is required")
+    @Min(value = 0, message = "Max eligible amount must be >= 0")
+    @Column(nullable = false)
     private Double maxEligibleAmount;
 
-    @OneToOne
-    private LoanRequest loanRequest;
+    @NotNull(message = "Estimated EMI is required")
+    @Min(value = 0, message = "Estimated EMI must be >= 0")
+    @Column(nullable = false)
+    private Double estimatedEmi;
 
-    public void setEligible(Boolean eligible) {
-        this.eligible = eligible;
-    }
+    @NotBlank(message = "Risk level is required")
+    @Pattern(
+        regexp = "LOW|MEDIUM|HIGH",
+        message = "Risk level must be LOW, MEDIUM, or HIGH"
+    )
+    @Column(nullable = false)
+    private String riskLevel;
 
-    public void setMaxEligibleAmount(Double maxEligibleAmount) {
-        this.maxEligibleAmount = maxEligibleAmount;
-    }
+    private String rejectionReason;
 
-    public void setLoanRequest(LoanRequest loanRequest) {
-        this.loanRequest = loanRequest;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime calculatedAt;
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.calculatedAt = LocalDateTime.now();
     }
-}
+   } }
