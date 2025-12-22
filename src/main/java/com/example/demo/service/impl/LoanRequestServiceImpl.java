@@ -1,38 +1,40 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;   
 import com.example.demo.entity.LoanRequest;
 import com.example.demo.repository.LoanRequestRepository;
-import com.example.demo.service.LoanRequestService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.example.demo.service.LoanRequestService;                
 
 @Service
-public class LoanRequestServiceImpl implements LoanRequestService {
+public class LoanRequestServiceImpl implements LoanRequestService{
 
-    private final LoanRequestRepository repo;
-
-    public LoanRequestServiceImpl(LoanRequestRepository repo) {
-        this.repo = repo;
-    }
-
+    @Autowired LoanRequestRepository used;
     @Override
-    public LoanRequest submitLoanRequest(LoanRequest request) {
-        return repo.save(request);
+    public LoanRequest postData4(LoanRequest use){
+        return used.save(use);  
     }
-
     @Override
-    public LoanRequest getRequestById(Long id) {
-        return repo.findById(id).orElseThrow();
+    public List<LoanRequest>getAllData4(){
+        return used.findAll();
     }
-
     @Override
-    public List<LoanRequest> getRequestsByUser(Long userId) {
-        return repo.findByUserId(userId);
+    public String DeleteData4(Long id){
+        used.deleteById(id);
+        return "Deleted successfully";
     }
-
     @Override
-    public List<LoanRequest> getAllRequests() {
-        return repo.findAll();
+    public LoanRequest getData4(Long id){
+    return used.findById(id).orElse(null);
+    }
+    @Override
+    public LoanRequest updateData4(Long id,LoanRequest entity){
+        if(used.existsById(id)){
+            entity.setId(id);
+            return used.save(entity);
+        } 
+        return null;
     }
 }

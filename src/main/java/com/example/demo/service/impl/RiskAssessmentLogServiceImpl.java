@@ -1,21 +1,40 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
-import com.example.demo.service.RiskAssessmentLogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;   
 import com.example.demo.entity.RiskAssessmentLog;
 import com.example.demo.repository.RiskAssessmentLogRepository;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.example.demo.service.RiskAssessmentLogService;                
 
 @Service
-public class RiskAssessmentLogServiceImpl implements RiskAssessmentLogService {
+public class RiskAssessmentLogServiceImpl implements RiskAssessmentLogService{
 
-    private final RiskAssessmentLogRepository repo;
-
-    public RiskAssessmentLogServiceImpl(RiskAssessmentLogRepository repo) {
-        this.repo = repo;
+    @Autowired RiskAssessmentLogRepository used;
+    @Override
+    public RiskAssessmentLog postData5(RiskAssessmentLog use){
+        return used.save(use);  
     }
-
-    public List<RiskAssessmentLog> getLogsByRequest(Long requestId) {
-        return repo.findAll();
+    @Override
+    public List<RiskAssessmentLog>getAllData5(){
+        return used.findAll();
+    }
+    @Override
+    public String DeleteData5(Long id){
+        used.deleteById(id);
+        return "Deleted successfully";
+    }
+    @Override
+    public RiskAssessmentLog getData5(Long id){
+    return used.findById(id).orElse(null);
+    }
+    @Override
+    public RiskAssessmentLog updateData5(Long id,RiskAssessmentLog entity){
+        if(used.existsById(id)){
+            entity.setId(id);
+            return used.save(entity);
+        } 
+        return null;
     }
 }

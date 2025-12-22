@@ -1,27 +1,40 @@
 package com.example.demo.service.impl;
 
-import org.springframework.stereotype.Service;
-import com.example.demo.service.FinancialProfileService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;   
 import com.example.demo.entity.FinancialProfile;
 import com.example.demo.repository.FinancialProfileRepository;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.example.demo.service.FinancialProfileService;                
 
 @Service
-public class FinancialProfileServiceImpl implements FinancialProfileService {
+public class FinancialProfileServiceImpl implements FinancialProfileService{
 
-    private final FinancialProfileRepository repo;
-
-    public FinancialProfileServiceImpl(FinancialProfileRepository repo) {
-        this.repo = repo;
+    @Autowired FinancialProfileRepository used;
+    @Override
+    public FinancialProfile postData3(FinancialProfile use){
+        return used.save(use);  
     }
-
-    public FinancialProfile createOrUpdateProfile(FinancialProfile profile) {
-        return repo.save(profile);
+    @Override
+    public List<FinancialProfile>getAllData3(){
+        return used.findAll();
     }
-
-    public FinancialProfile getProfileByUser(Long userId) {
-        return repo.findAll().stream()
-                .filter(p -> p.getUser().getId().equals(userId))
-                .findFirst()
-                .orElse(null);
+    @Override
+    public String DeleteData3(Long id){
+        used.deleteById(id);
+        return "Deleted successfully";
+    }
+    @Override
+    public FinancialProfile getData3(Long id){
+    return used.findById(id).orElse(null);
+    }
+    @Override
+    public FinancialProfile updateData3(Long id,FinancialProfile entity){
+        if(used.existsById(id)){
+            entity.setId(id);
+            return used.save(entity);
+        } 
+        return null;
     }
 }
