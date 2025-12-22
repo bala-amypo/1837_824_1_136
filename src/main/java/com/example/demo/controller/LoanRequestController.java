@@ -26,7 +26,7 @@
 //     }
 
 //     @GetMapping("/{id}")
-//     public LoanRequest get(@PathVariable Long id) {
+    public LoanRequest get(@PathVariable Long id) {
 //         return service.getRequestById(id);
 //     }
 
