@@ -17,7 +17,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    // ✅ Constructor Injection ONLY
+  
     public AuthController(UserService userService,
                           JwtUtil jwtUtil,
                           PasswordEncoder passwordEncoder) {
