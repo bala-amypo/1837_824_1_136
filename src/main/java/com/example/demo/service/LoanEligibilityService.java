@@ -1,7 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.EligibilityResult;
+import org.springframework.stereotype.Service;
 
-public interface LoanEligibilityService {
-    EligibilityResult getResultByRequest(Long requestId);
+@Service
+public class LoanEligibilityService {
+
+    public String checkEligibility(Long income) {
+        if (income >= 25000) {
+            return "Eligible for Loan";
+        } else {
+            return "Not Eligible for Loan";
+        }
+    }
 }
