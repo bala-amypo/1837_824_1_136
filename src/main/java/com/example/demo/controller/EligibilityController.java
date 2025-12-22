@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.EligibilityResult;
 import com.example.demo.service.LoanEligibilityService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,8 @@ public class EligibilityController {
         this.service = service;
     }
 
-    @GetMapping("/{requestId}")
-    public EligibilityResult checkEligibility(@PathVariable Long requestId) {
-        return service.getResultByRequest(requestId);
+    @GetMapping("/{income}")
+    public String checkEligibility(@PathVariable Long income) {
+        return service.checkEligibility(income);
     }
 }
