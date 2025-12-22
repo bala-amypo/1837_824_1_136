@@ -52,4 +52,4 @@ public class EligibilityResult {
     protected void onCreate() {
         this.calculatedAt = LocalDateTime.now();
     }
-   } }
+   } 
