@@ -1,42 +1,29 @@
 package com.example.demo.controller;
 
-import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entity.EligibilityResult;
-// import com.example.demo.service.UserService;
-import com.example.demo.service.LoanEligibilityService;
-import jakarta.validation.Valid;
+import com.example.demo.service.EligibilityService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/EligibilityResult")
-public class EligibilityController{
-    @Autowired  LoanEligibilityService ser;
-    @PostMapping("/register")
-    public EligibilityResult sendData(@RequestBody EligibilityResult stu){
-        return ser.postData2(stu);
+@RequestMapping("/eligibility")
+public class EligibilityController {
+
+    private final EligibilityService eligibilityService;
+
+    public EligibilityController(EligibilityService eligibilityService) {
+        this.eligibilityService = eligibilityService;
     }
-    @GetMapping("/get")
-    public List<EligibilityResult> getval(){
-        return ser.getAllData2();
+
+    @PostMapping("/{loanRequestId}")
+    public ResponseEntity<EligibilityResult> evaluate(@PathVariable Long loanRequestId) {
+        EligibilityResult result = eligibilityService.evaluateEligibility(loanRequestId);
+        return ResponseEntity.ok(result);
     }
-    @DeleteMapping("/delete/{id}")
-    public String del(@PathVariable Long id){
-        return ser.DeleteData2(id);
-    }
-    @GetMapping("/find/{id}")
-    public EligibilityResult find(@PathVariable Long id){
-        return ser.getData2(id);
-    }
-    @PutMapping("/put/{id}")
-    public EligibilityResult putval(@PathVariable Long id,@RequestBody EligibilityResult entity){
-        return ser.updateData2(id,entity);
+
+    @GetMapping("/{loanRequestId}")
+    public ResponseEntity<EligibilityResult> getByLoanRequest(@PathVariable Long loanRequestId) {
+        EligibilityResult result = eligibilityService.getByLoanRequestId(loanRequestId);
+        return ResponseEntity.ok(result);
     }
 }
