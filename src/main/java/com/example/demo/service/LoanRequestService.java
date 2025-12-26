@@ -1,12 +1,12 @@
+// src/main/java/com/example/demo/service/LoanRequestService.java
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.entity.LoanRequest;
 
-public interface LoanRequestService{
-    LoanRequest postData4(LoanRequest use);
-    List<LoanRequest>getAllData4();
-    String  DeleteData4(Long id);
-    LoanRequest getData4(Long id);         
-    LoanRequest updateData4(Long id,LoanRequest entity);                                                        
+import java.util.List;
+
+public interface LoanRequestService {
+    LoanRequest submitRequest(LoanRequest request);
+    LoanRequest getById(Long id);
+    List<LoanRequest> getRequestsByUser(Long userId);
 }

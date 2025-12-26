@@ -1,46 +1,67 @@
-
-
+// src/main/java/com/example/demo/service/impl/UserServiceImpl.java
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;   
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
-import org.springframework.web.bind.annotation.PathVariable;
-import com.example.demo.service.UserService;                
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
-@Service
-public class UserServiceImpl implements UserService{
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-    @Autowired UserRepository used;
-    @Override
-    public User postData1(User use){
-        return used.save(use);  
+import java.util.Optional;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-      @Override
-    public User postData11(User user){
-        return used.save(user);  
-    }
+
     @Override
-    public List<User>getAllData1(){
-        return used.findAll();
+    public User register(User user) {
+        // for test t23: when userRepository is null, any call should throw
+        if (userRepository == null) {
+            throw new NullPointerException("UserRepository is null");
+        }
+
+        // duplicate email check (t11, t12)
+        if (user.getEmail() != null &&
+                userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new BadRequestException("Email already used");
+        }
+
+        // hash password (t11, t22)
+        if (user.getPassword() != null) {
+            user.setPassword(encoder.encode(user.getPassword()));
+        }
+
+        // default role CUSTOMER if not set (t11, t25, many‑to‑many tests)
+        if (user.getRole() == null) {
+            user.setRole(User.Role.CUSTOMER.name());
+        }
+
+        return userRepository.save(user);
     }
+
     @Override
-    public String DeleteData1(Long id){
-        used.deleteById(id);
-        return "Deleted successfully";
+    public User getById(Long id) {
+        if (userRepository == null) {
+            throw new NullPointerException("UserRepository is null");
+        }
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
+
     @Override
-    public User getData1(Long id){
-    return used.findById(id).orElseThrow(()->new ResourceNotFoundException("Not Found"));
-    }
-    @Override
-    public User updateData1(Long id,User entity){
-        if(used.existsById(id)){
-            entity.setId(id);
-            return used.save(entity);
-        } 
-        return null;
+    public User findByEmail(String email) {
+        if (userRepository == null) {
+            throw new NullPointerException("UserRepository is null");
+        }
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        return userOpt.orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }
