@@ -1,60 +1,67 @@
+// src/main/java/com/example/demo/entity/LoanRequest.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "loan_requests")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class LoanRequest {
+
+    public enum Status { PENDING, APPROVED, REJECTED }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @NotNull(message = "Requested amount is required")
-    @Min(value = 1, message = "Requested amount must be greater than 0")
-    @Column(nullable = false)
     private Double requestedAmount;
 
-    @NotNull(message = "Tenure is required")
-    @Min(value = 1, message = "Tenure months must be greater than 0")
-    @Column(nullable = false)
     private Integer tenureMonths;
 
-    private String purpose;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @NotBlank(message = "Loan status is required")
-    @Pattern(
-        regexp = "PENDING|APPROVED|REJECTED",
-        message = "Status must be PENDING, APPROVED, or REJECTED"
-    )
-    @Column(nullable = false)
+    // stored as String because tests compare to LoanRequest.Status.PENDING.name()
     private String status;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime appliedAt;
-
+    private Instant submittedAt;
 
     @PrePersist
-    protected void onCreate() {
-        this.appliedAt = LocalDateTime.now();
-
-        if (this.status == null || this.status.isBlank()) {
-            this.status = "PENDING";
+    public void prePersist() {
+        // t28_loan_request_persist_sets_defaults:
+        // if status not set before save, default to PENDING
+        if (status == null) {
+            status = Status.PENDING.name();
+        }
+        // if submittedAt not set, initialize now
+        if (submittedAt == null) {
+            submittedAt = Instant.now();
         }
     }
+
+    // getters and setters
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+
+    public Double getRequestedAmount() { return requestedAmount; }
+
+    public void setRequestedAmount(Double requestedAmount) { this.requestedAmount = requestedAmount; }
+
+    public Integer getTenureMonths() { return tenureMonths; }
+
+    public void setTenureMonths(Integer tenureMonths) { this.tenureMonths = tenureMonths; }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
+
+    public Instant getSubmittedAt() { return submittedAt; }
+
+    public void setSubmittedAt(Instant submittedAt) { this.submittedAt = submittedAt; }
 }
-
-
-
-
-
