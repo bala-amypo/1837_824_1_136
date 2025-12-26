@@ -1,40 +1,69 @@
+// src/main/java/com/example/demo/service/impl/FinancialProfileServiceImpl.java
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;   
 import com.example.demo.entity.FinancialProfile;
+import com.example.demo.entity.User;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.FinancialProfileRepository;
-import org.springframework.web.bind.annotation.PathVariable;
-import com.example.demo.service.FinancialProfileService;                
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.FinancialProfileService;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Optional;
 
 @Service
-public class FinancialProfileServiceImpl implements FinancialProfileService{
+public class FinancialProfileServiceImpl implements FinancialProfileService {
 
-    @Autowired FinancialProfileRepository used;
-    @Override
-    public FinancialProfile postData3(FinancialProfile use){
-        return used.save(use);  
+    private final FinancialProfileRepository financialProfileRepository;
+    private final UserRepository userRepository;
+
+    public FinancialProfileServiceImpl(FinancialProfileRepository financialProfileRepository,
+                                       UserRepository userRepository) {
+        this.financialProfileRepository = financialProfileRepository;
+        this.userRepository = userRepository;
     }
+
     @Override
-    public List<FinancialProfile>getAllData3(){
-        return used.findAll();
+    public FinancialProfile createOrUpdate(FinancialProfile profile) {
+        if (profile.getCreditScore() != null &&
+                (profile.getCreditScore() < 300 || profile.getCreditScore() > 900)) {
+            throw new BadRequestException("Invalid credit score");
+        }
+
+        Long userId = profile.getUser() != null ? profile.getUser().getId() : null;
+        if (userId == null) {
+            throw new BadRequestException("User required");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Optional<FinancialProfile> existingOpt = financialProfileRepository.findByUserId(userId);
+        FinancialProfile toSave;
+        if (existingOpt.isPresent()) {
+            FinancialProfile existing = existingOpt.get();
+            existing.setMonthlyIncome(profile.getMonthlyIncome());
+            existing.setMonthlyExpenses(profile.getMonthlyExpenses());
+            existing.setExistingLoanEmi(profile.getExistingLoanEmi());
+            existing.setCreditScore(profile.getCreditScore());
+            existing.setSavingsBalance(profile.getSavingsBalance());
+            toSave = existing;
+        } else {
+            profile.setUser(user);
+            toSave = profile;
+        }
+
+        // Explicitly set lastUpdatedAt so tests see it with mocked repo (t29)
+        toSave.setLastUpdatedAt(Instant.now());
+
+        return financialProfileRepository.save(toSave);
     }
+
     @Override
-    public String DeleteData3(Long id){
-        used.deleteById(id);
-        return "Deleted successfully";
-    }
-    @Override
-    public FinancialProfile getData3(Long id){
-    return used.findById(id).orElse(null);
-    }
-    @Override
-    public FinancialProfile updateData3(Long id,FinancialProfile entity){
-        if(used.existsById(id)){
-            entity.setId(id);
-            return used.save(entity);
-        } 
-        return null;
+    public FinancialProfile getByUserId(Long userId) {
+        return financialProfileRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
     }
 }
